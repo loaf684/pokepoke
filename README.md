@@ -6,7 +6,7 @@ A Vite + React app for searching Pokemon with PokeAPI and saving favorites with 
 
 - Search Pokemon by name or national dex ID
 - View official artwork, type badges, height, weight, experience, and core stats
-- Sign in or create an account with Supabase Auth
+- Sign in or create an account with a username and password
 - Save favorite Pokemon to a user-scoped Supabase `favorites` table
 - Manage your saved favorites with loading, empty, and error states
 - Responsive UI for desktop and mobile
@@ -85,4 +85,4 @@ on favorites for delete
 using (auth.uid() = user_id);
 ```
 
-Enable Supabase Auth email/password signups for the sign-in page.
+Enable Supabase Auth email/password signups for the sign-in page, and disable email confirmation because the app uses a name-only login. Names are stored in auth metadata and converted to a hidden Supabase Auth identifier behind the scenes.

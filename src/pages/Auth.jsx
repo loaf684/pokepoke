@@ -2,8 +2,27 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 
+const AUTH_IDENTIFIER_DOMAIN = 'users.pokepoke-login.com'
+
+function normalizeName(value) {
+  return value.trim()
+}
+
+function nameToAuthIdentifier(name) {
+  const safeName = normalizeName(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+  if (!safeName) {
+    return ''
+  }
+
+  return `${safeName}@${AUTH_IDENTIFIER_DOMAIN}`
+}
+
 export default function Auth() {
-  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [mode, setMode] = useState('sign-in')
   const [loading, setLoading] = useState(false)
@@ -15,25 +34,53 @@ export default function Auth() {
     setLoading(true)
     setMessage('')
 
+    const trimmedName = normalizeName(name)
+
+    if (!trimmedName) {
+      setLoading(false)
+      setMessage('Enter your name.')
+      return
+    }
+
+    const authIdentifier = nameToAuthIdentifier(trimmedName)
+
+    if (!authIdentifier) {
+      setLoading(false)
+      setMessage('Use at least one letter or number in your name.')
+      return
+    }
+
     const credentials = {
-      email: email.trim(),
+      email: authIdentifier,
       password,
     }
 
     const { error } =
       mode === 'sign-up'
-        ? await supabase.auth.signUp(credentials)
+        ? await supabase.auth.signUp({
+            ...credentials,
+            options: {
+              data: {
+                name: trimmedName,
+              },
+            },
+          })
         : await supabase.auth.signInWithPassword(credentials)
 
     setLoading(false)
 
     if (error) {
+      if (error.message.toLowerCase().includes('email not confirmed')) {
+        setMessage('Name sign in needs account confirmation disabled in Supabase Auth settings.')
+        return
+      }
+
       setMessage(error.message)
       return
     }
 
     if (mode === 'sign-up') {
-      setMessage('Account created. Check your email if confirmation is enabled.')
+      setMessage('Account created. You can log out and sign in again with this name and password.')
       return
     }
 
@@ -45,7 +92,7 @@ export default function Auth() {
       <header className="page-heading">
         <p className="eyebrow">Trainer account</p>
         <h1>{mode === 'sign-up' ? 'Create an account' : 'Sign in to save favorites'}</h1>
-        <p>Favorites are saved to your Supabase account so your collection stays private.</p>
+        <p>Favorites are saved to your trainer account so your collection stays private.</p>
       </header>
 
       <section className="panel auth-panel">
@@ -68,15 +115,16 @@ export default function Auth() {
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <label>
-            <span>Email</span>
+            <span>Name</span>
             <input
               className="search-input"
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               required
-              autoComplete="email"
-              placeholder="trainer@example.com"
+              minLength={3}
+              autoComplete="name"
+              placeholder="trainer name"
             />
           </label>
 
@@ -99,7 +147,11 @@ export default function Auth() {
           </button>
         </form>
 
-        {message && <p className={message.includes('created') ? 'favorite-message' : 'error-message'}>{message}</p>}
+        {message && (
+          <p className={message.includes('created') || message.includes('sent') ? 'favorite-message' : 'error-message'}>
+            {message}
+          </p>
+        )}
 
         <Link className="action-link" to="/">
           Back to search

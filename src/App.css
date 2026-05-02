@@ -88,7 +88,7 @@
 .nav-links a.active,
 .nav-links a:hover,
 .nav-links button:hover {
-  background: #fff;
+  background: var(--nav-hover);
   color: var(--text-h);
 }
 
@@ -184,7 +184,7 @@ main {
   padding: 6px;
   border: 1px solid var(--border);
   border-radius: 18px;
-  background: #fff7ed;
+  background: var(--surface-warm);
 }
 
 .auth-tabs button {
@@ -197,7 +197,7 @@ main {
 
 .auth-tabs button.active,
 .auth-tabs button:hover {
-  background: #fff;
+  background: var(--nav-hover);
   color: var(--text-h);
 }
 
@@ -246,7 +246,7 @@ main {
   min-height: 56px;
   border: 1px solid var(--border);
   border-radius: 16px;
-  background: #fff;
+  background: var(--surface-solid);
   color: var(--text-h);
   font-size: 1rem;
   outline: none;
@@ -300,7 +300,7 @@ main {
   padding: 0 18px;
   border: 1px solid var(--border);
   color: var(--text-h);
-  background: #fff;
+  background: var(--surface-solid);
 }
 
 .error-message,
@@ -310,11 +310,11 @@ main {
 }
 
 .error-message {
-  color: #b91c1c;
+  color: var(--danger);
 }
 
 .favorite-message {
-  color: #15803d;
+  color: var(--success);
 }
 
 .loader {
@@ -334,7 +334,7 @@ main {
 .suggestion-pill {
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--surface-solid);
   color: var(--text-h);
   font-weight: 800;
   padding: 10px 16px;
@@ -344,7 +344,7 @@ main {
 
 .suggestion-pill:hover {
   border-color: rgba(239, 68, 68, 0.42);
-  background: #fff7ed;
+  background: var(--surface-warm);
   transform: translateY(-1px);
 }
 
@@ -392,7 +392,7 @@ main {
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 22px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 247, 237, 0.92)),
+    var(--surface-art),
     radial-gradient(circle at 30% 20%, rgba(239, 68, 68, 0.16), transparent 36%);
 }
 
@@ -420,7 +420,7 @@ main {
 .favorite-card {
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 18px;
-  background: #fff;
+  background: var(--surface-solid);
 }
 
 .pokemon-summary div {
@@ -451,7 +451,7 @@ main {
 .type-pill {
   border-radius: 999px;
   background: rgba(249, 115, 22, 0.12);
-  color: var(--text-h);
+  color: var(--type-text);
   font-size: 0.88rem;
   font-weight: 800;
   padding: 9px 14px;
@@ -517,7 +517,7 @@ main {
   height: 72px;
   object-fit: contain;
   border-radius: 16px;
-  background: #fff7ed;
+  background: var(--surface-warm);
 }
 
 .favorite-card h2 {
@@ -528,8 +528,8 @@ main {
   grid-column: 1 / -1;
   min-height: 42px;
   border: 1px solid rgba(185, 28, 28, 0.24);
-  background: #fff;
-  color: #b91c1c;
+  background: var(--surface-solid);
+  color: var(--danger);
 }
 
 .empty-state {

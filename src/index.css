@@ -2,12 +2,19 @@
   --bg: linear-gradient(180deg, #fff7ed 0%, #f8fafc 44%, #edf2f7 100%);
   --surface: rgba(255, 255, 255, 0.92);
   --surface-soft: rgba(255, 255, 255, 0.72);
+  --surface-solid: #fff;
+  --surface-warm: #fff7ed;
+  --surface-art: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 247, 237, 0.92));
+  --nav-hover: #fff;
   --text: #000000;
   --text-muted: #111111;
   --text-h: #000000;
   --accent: #f97316;
   --accent-soft: #fee2e2;
   --accent-strong: #dc2626;
+  --type-text: #111827;
+  --danger: #b91c1c;
+  --success: #15803d;
   --border: rgba(148, 163, 184, 0.24);
   --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
   --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.06);
@@ -15,6 +22,7 @@
   --radius: 24px;
   --font: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  color-scheme: light;
 }
 
 @media (max-width: 1024px) {
@@ -23,22 +31,28 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: linear-gradient(180deg, #fff7ed 0%, #f8fafc 44%, #edf2f7 100%);
-    --surface: rgba(255, 255, 255, 0.92);
-    --surface-soft: rgba(255, 255, 255, 0.72);
-    --text: #000000;
-    --text-muted: #111111;
-    --text-h: #000000;
-    --accent: #f97316;
-    --accent-soft: #fee2e2;
-    --accent-strong: #dc2626;
-    --border: rgba(148, 163, 184, 0.24);
-    --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
-    --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.06);
-    --focus: #f59e0b;
-  }
+[data-theme='dark'] {
+  --bg: linear-gradient(180deg, #111827 0%, #182033 48%, #111827 100%);
+  --surface: rgba(31, 41, 55, 0.92);
+  --surface-soft: rgba(17, 24, 39, 0.72);
+  --surface-solid: #1f2937;
+  --surface-warm: #2b2430;
+  --surface-art: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(43, 36, 48, 0.94));
+  --nav-hover: #374151;
+  --text: #e5e7eb;
+  --text-muted: #cbd5e1;
+  --text-h: #f8fafc;
+  --accent: #fb923c;
+  --accent-soft: rgba(251, 146, 60, 0.18);
+  --accent-strong: #fca5a5;
+  --type-text: #111827;
+  --danger: #fca5a5;
+  --success: #86efac;
+  --border: rgba(148, 163, 184, 0.28);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  --shadow-soft: 0 14px 30px rgba(0, 0, 0, 0.2);
+  --focus: #fbbf24;
+  color-scheme: dark;
 }
 
 * {

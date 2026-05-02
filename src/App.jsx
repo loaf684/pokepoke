@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
 import AuthProvider from './AuthProvider'
 import { useAuth } from './auth'
@@ -10,6 +11,20 @@ import './App.css'
 
 function AppShell() {
   const { loading, user } = useAuth()
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
+
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('theme', theme)
+  }, [theme])
 
   const signOut = async () => {
     await supabase.auth.signOut()
@@ -31,6 +46,14 @@ function AppShell() {
         <nav className="nav-links" aria-label="Primary navigation">
           <NavLink to="/">Search</NavLink>
           <NavLink to="/favorites">Favorites</NavLink>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={() => setTheme((currentTheme) => currentTheme === 'dark' ? 'light' : 'dark')}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? 'Light' : 'Dark'}
+          </button>
           {!loading && !user && <NavLink to="/auth">Sign in</NavLink>}
           {!loading && user && (
             <button type="button" onClick={signOut}>
@@ -55,7 +78,7 @@ function AppShell() {
         >
           GitHub
         </a>
-        <span>Made with ❤️ by loaf684</span>
+        <span>Made with {'\u2764\uFE0F'} by loaf684</span>
       </footer>
     </div>
   )

@@ -1,113 +1,112 @@
 :root {
-  --text: #1f2937;
-  --text-h: #000000;
-  --bg: linear-gradient(180deg, #793f3f 0%, #c78a67 38%, #be654a 100%);
-  --border: #fde4e1;
-  --code-bg: #a5874f;
-  --accent: #ef4444;
-  --accent-bg: rgba(239, 68, 68, 0.14);
-  --accent-border: rgba(239, 68, 68, 0.35);
-  --social-bg: rgba(254, 205, 211, 0.45);
-  --shadow:
-    rgba(0, 0, 0, 0.08) 0 10px 15px -3px, rgba(0, 0, 0, 0.04) 0 4px 6px -2px;
+  --bg: linear-gradient(180deg, #fff7ed 0%, #f8fafc 44%, #edf2f7 100%);
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-soft: rgba(255, 255, 255, 0.72);
+  --text: #102a43;
+  --text-muted: #334e68;
+  --text-h: #0f172a;
+  --accent: #f97316;
+  --accent-soft: #fee2e2;
+  --accent-strong: #dc2626;
+  --border: rgba(148, 163, 184, 0.24);
+  --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.06);
+  --focus: #f59e0b;
+  --radius: 24px;
+  --font: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+}
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #b51778;
-    --text-h: #ff8c00;
-    --bg: linear-gradient(180deg, #9e113c 0%, #1e293b 100%);
-    --border: #334155;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --bg: linear-gradient(180deg, #111827 0%, #0f172a 48%, #1e293b 100%);
+    --surface: rgba(15, 23, 42, 0.88);
+    --surface-soft: rgba(30, 41, 59, 0.72);
+    --text: #e2e8f0;
+    --text-muted: #cbd5e1;
+    --text-h: #f8fafc;
+    --accent: #f97316;
+    --accent-soft: rgba(251, 146, 60, 0.16);
+    --accent-strong: #fb923c;
+    --border: rgba(148, 163, 184, 0.18);
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    --shadow-soft: 0 14px 30px rgba(0, 0, 0, 0.24);
+    --focus: #fbbf24;
   }
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--bg);
+  line-height: 1.6;
+  min-width: 320px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
 #root {
-  width: min(1126px, 100%);
+  width: min(1160px, 100%);
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding: 0 16px;
+  padding: 0 20px;
+  min-height: 100vh;
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font);
   color: var(--text-h);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
 p {
   margin: 0;
 }
 
 code,
-.counter {
+pre {
   font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  background: rgba(15, 23, 42, 0.05);
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.5rem;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+button {
+  border: none;
+  background: none;
 }

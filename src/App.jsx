@@ -16,7 +16,7 @@ function AppShell() {
   }
 
   return (
-    <>
+    <div className="app-shell">
       <header className="app-header">
         <NavLink to="/" className="brand" aria-label="Pokemon Explorer home">
           <span className="brand-mark" aria-hidden="true">
@@ -46,7 +46,18 @@ function AppShell() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/auth" element={<Auth />} />
       </Routes>
-    </>
+
+      <footer className="app-footer">
+        <a
+          href="https://github.com/loaf684/pokepoke"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+        <span>Made with ❤️ by loaf684</span>
+      </footer>
+    </div>
   )
 }
 

@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useAuth } from '../auth'
 import { supabase } from '../supabase'
 
 export default function Detail() {
   const { name } = useParams()
+  const { loading: authLoading, user } = useAuth()
   const [pokemon, setPokemon] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
   const [favoriteMessage, setFavoriteMessage] = useState('')
+  const [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
     if (!name) return
@@ -33,7 +36,10 @@ export default function Detail() {
         return response.json()
       })
       .then((data) => {
-        if (active && data) setPokemon(data)
+        if (active && data) {
+          setPokemon(data)
+          setIsFavorite(false)
+        }
       })
       .catch((err) => {
         if (active) setError(err.message)
@@ -47,13 +53,47 @@ export default function Detail() {
     }
   }, [name])
 
+  useEffect(() => {
+    if (!pokemon || authLoading || !user) {
+      return
+    }
+
+    let active = true
+
+    supabase
+      .from('favorites')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('pokemon_id', pokemon.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (active) setIsFavorite(Boolean(data))
+      })
+
+    return () => {
+      active = false
+    }
+  }, [authLoading, pokemon, user])
+
   const saveFavorite = async () => {
     if (!pokemon) return
+
+    if (!user) {
+      setFavoriteMessage('Please sign in before adding favorites.')
+      return
+    }
+
+    if (isFavorite) {
+      setFavoriteMessage('This Pokemon is already in your favorites.')
+      return
+    }
 
     setSaving(true)
     setFavoriteMessage('')
 
     const { error } = await supabase.from('favorites').insert({
+      user_id: user.id,
+      pokemon_id: pokemon.id,
       name: pokemon.name,
       image_url: pokemon.sprites?.front_default,
       types: pokemon.types.map((typeInfo) => typeInfo.type.name).join(', '),
@@ -67,6 +107,7 @@ export default function Detail() {
       return
     }
 
+    setIsFavorite(true)
     setFavoriteMessage('Added to favorites.')
   }
 
@@ -145,14 +186,20 @@ export default function Detail() {
         </div>
 
         <div className="detail-actions">
-          <button
-            type="button"
-            className="favorite-button"
-            onClick={saveFavorite}
-            disabled={saving}
-          >
-            {saving ? 'Saving...' : 'Add to favorites'}
-          </button>
+          {user ? (
+            <button
+              type="button"
+              className="favorite-button"
+              onClick={saveFavorite}
+              disabled={saving || isFavorite}
+            >
+              {saving ? 'Saving...' : isFavorite ? 'Already favorited' : 'Add to favorites'}
+            </button>
+          ) : (
+            <Link className="favorite-button" to="/auth">
+              Sign in to favorite
+            </Link>
+          )}
           <Link className="action-link" to="/">Back to search</Link>
         </div>
 

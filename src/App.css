@@ -70,15 +70,18 @@
   box-shadow: var(--shadow-soft);
 }
 
-.nav-links a {
+.nav-links a,
+.nav-links button {
   border-radius: 13px;
   color: var(--text);
+  cursor: pointer;
   font-weight: 700;
   padding: 9px 14px;
 }
 
 .nav-links a.active,
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links button:hover {
   background: #fff;
   color: var(--text-h);
 }
@@ -89,7 +92,8 @@ main {
 
 .home-page,
 .detail-page,
-.favorites-page {
+.favorites-page,
+.auth-page {
   display: grid;
   gap: 22px;
 }
@@ -134,9 +138,46 @@ main {
 
 .search-panel,
 .suggestions-list,
-.favorites-panel {
+.favorites-panel,
+.auth-panel,
+.auth-form {
   display: grid;
   gap: 20px;
+}
+
+.auth-panel {
+  max-width: 560px;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #fff7ed;
+}
+
+.auth-tabs button {
+  min-height: 44px;
+  border-radius: 13px;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.auth-tabs button.active,
+.auth-tabs button:hover {
+  background: #fff;
+  color: var(--text-h);
+}
+
+.auth-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--text-h);
+  font-weight: 800;
 }
 
 .section-heading {
@@ -488,7 +529,8 @@ a:focus-visible,
     width: 100%;
   }
 
-  .nav-links a {
+  .nav-links a,
+  .nav-links button {
     flex: 1;
     text-align: center;
   }

@@ -1,10 +1,20 @@
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
+import AuthProvider from './AuthProvider'
+import { useAuth } from './auth'
 import Home from './pages/Home'
 import Detail from './pages/Detail'
 import Favorites from './pages/Favorites'
+import Auth from './pages/Auth'
+import { supabase } from './supabase'
 import './App.css'
 
 function AppShell() {
+  const { loading, user } = useAuth()
+
+  const signOut = async () => {
+    await supabase.auth.signOut()
+  }
+
   return (
     <>
       <header className="app-header">
@@ -21,6 +31,12 @@ function AppShell() {
         <nav className="nav-links" aria-label="Primary navigation">
           <NavLink to="/">Search</NavLink>
           <NavLink to="/favorites">Favorites</NavLink>
+          {!loading && !user && <NavLink to="/auth">Sign in</NavLink>}
+          {!loading && user && (
+            <button type="button" onClick={signOut}>
+              Sign out
+            </button>
+          )}
         </nav>
       </header>
 
@@ -28,6 +44,7 @@ function AppShell() {
         <Route path="/" element={<Home />} />
         <Route path="/pokemon/:name" element={<Detail />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
     </>
   )
@@ -36,7 +53,9 @@ function AppShell() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppShell />
+      <AuthProvider>
+        <AppShell />
+      </AuthProvider>
     </BrowserRouter>
   )
 }

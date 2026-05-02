@@ -9,7 +9,9 @@ function AppShell() {
     <>
       <header className="app-header">
         <NavLink to="/" className="brand" aria-label="Pokemon Explorer home">
-          <span className="brand-mark">PX</span>
+          <span className="brand-mark" aria-hidden="true">
+            <span className="brand-mark-core" />
+          </span>
           <span>
             <strong>Pokemon Explorer</strong>
             <small>PokeAPI search and favorites</small>

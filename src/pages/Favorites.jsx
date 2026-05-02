@@ -92,11 +92,17 @@ export default function Favorites() {
           <div className="favorites-grid">
             {favorites.map((pokemon) => (
               <article key={pokemon.id} className="favorite-card">
-                <img src={pokemon.image_url} alt={pokemon.name} />
-                <div>
-                  <h2>{pokemon.name}</h2>
-                  <p>{pokemon.types}</p>
-                </div>
+                <Link
+                  className="favorite-card-link"
+                  to={`/pokemon/${encodeURIComponent(pokemon.name)}`}
+                  aria-label={`Open ${pokemon.name} profile`}
+                >
+                  <img src={pokemon.image_url} alt="" />
+                  <div>
+                    <h2>{pokemon.name}</h2>
+                    <p>{pokemon.types}</p>
+                  </div>
+                </Link>
                 <button type="button" onClick={() => removeFavorite(pokemon.id)}>
                   Remove
                 </button>
